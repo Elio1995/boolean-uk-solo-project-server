@@ -12,12 +12,22 @@ generator client {
   previewFeatures = ["referentialActions", "selectRelationCount"]
 }
 
-// PRODUCTS
 
+
+// Enum Products
+enum Category {
+  ALL
+  ELECTRONICS
+  JEWELERY
+  MENSCLOTHING
+  WOMENSCLOTHING
+}
+
+// PRODUCTS
 model Product {
   id               Int         @id @default(autoincrement())
-  name             String
-  category         String
+  title            String
+  category         Category   @default(ALL)
   price            Float
   description      String
   image            String
@@ -29,6 +39,7 @@ model Product {
   saveSearch       saveSearch[]
 }
 
+// USER
 model User {
   id               Int         @id @default(autoincrement())
   firstName        String
@@ -44,6 +55,7 @@ model User {
   saveSearch       saveSearch[]
 }
 
+// CART
 model Cart {
   id               Int    @id @default(autoincrement())
   date             Int
@@ -52,6 +64,7 @@ model Cart {
   user             User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)          
 }
 
+// SAVESEARCH
 model saveSearch {
   id               Int         @id @default(autoincrement())
   productId        Int
