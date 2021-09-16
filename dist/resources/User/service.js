@@ -12,27 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findUserWithValidation = void 0;
 const database_1 = __importDefault(require("../../utils/database"));
 const bcrypt_1 = require("bcrypt");
-const findUserWithValidation = (userData) => __awaiter(void 0, void 0, void 0, function* () {
-    const foundUser = yield database_1.default.user.findFirst({
-        where: { email: userData.email },
+const createWithHash = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
+    // grab user plaintext password
+    const plaintext = newUser.password;
+    // Hash it using bcrypt. It will return a PROMISE!!!!
+    const hashedPassword = yield (0, bcrypt_1.hash)(plaintext, 10);
+    // Make sure to save the hashed password!
+    const savedUser = yield database_1.default.user.create({
+        data: Object.assign(Object.assign({}, newUser), { password: hashedPassword }),
     });
-    if (!foundUser)
-        throw new Error("Username/Password incorrect");
-    const isPasswordValid = yield (0, bcrypt_1.compare)(userData.password, foundUser.password);
-    if (!isPasswordValid)
-        throw new Error("Username/Password incorrect");
-    return foundUser;
+    return savedUser;
 });
-exports.findUserWithValidation = findUserWithValidation;
-// export const createdWithHash = async (newUser: User) => {
-//   const plainText = newUser.password;
-//   const hashedPassword = await hash(plainText, 15);
-//   const savedUser = prisma.user.create({
-//     data: { ...newUser, password: hashedPassword },
-//   });
-//   return savedUser;
-// };
-//# sourceMappingURL=services.js.map
+const userClient = Object.assign(Object.assign({}, database_1.default.user), { createWithHash });
+exports.default = userClient;
+//# sourceMappingURL=service.js.map

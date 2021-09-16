@@ -1,9 +1,9 @@
 import prisma from "../../utils/database";
 import { User } from ".prisma/client";
-import { compare, hash } from "bcrypt";
+import { compare } from "bcrypt";
 
 export const findUserWithValidation = async (userData: User) => {
-  const foundUser = await prisma.User.findUnique({
+  const foundUser = await prisma.user.findFirst({
     where: { email: userData.email },
   });
 
@@ -15,12 +15,12 @@ export const findUserWithValidation = async (userData: User) => {
   return foundUser;
 };
 
-export const createdWithHash = async (newUser: User) => {
-  const plainText = newUser.password;
+// export const createdWithHash = async (newUser: User) => {
+//   const plainText = newUser.password;
 
-  const hashedPassword = await hash(plainText, 15);
-  const savedUser = prisma.user.create({
-    data: { ...newUser, password: hashedPassword },
-  });
-  return savedUser;
-};
+//   const hashedPassword = await hash(plainText, 15);
+//   const savedUser = prisma.user.create({
+//     data: { ...newUser, password: hashedPassword },
+//   });
+//   return savedUser;
+// };
