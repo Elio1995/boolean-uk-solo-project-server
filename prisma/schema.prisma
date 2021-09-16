@@ -16,7 +16,6 @@ generator client {
 
 // Enum Products
 enum Category {
-  ALL
   ELECTRONICS
   JEWELERY
   MENSCLOTHING
@@ -27,16 +26,21 @@ enum Category {
 model Product {
   id               Int         @id @default(autoincrement())
   title            String
-  category         Category   @default(ALL)
+  category         Category   
   price            Float
   description      String
   image            String
   quantity         Int
-  userId           Int
-  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  cartId           Int
-  cart             Cart        @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)  
+  userId           Int?
+  user             User?       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId           Int?
+  cart             Cart?        @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)  
   saveSearch       saveSearch[]
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 // USER
@@ -46,6 +50,7 @@ model User {
   lastName         String
   email            String      @unique
   username         String
+  role             Role        @default(USER)
   password         String
   street           String
   city             String

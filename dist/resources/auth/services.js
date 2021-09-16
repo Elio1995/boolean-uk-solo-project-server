@@ -36,4 +36,4 @@ const createdWithHash = (newUser) => __awaiter(void 0, void 0, void 0, function*
     return savedUser;
 });
 exports.createdWithHash = createdWithHash;
-//# sourceMappingURL=service.js.map
+//# sourceMappingURL=services.js.map
