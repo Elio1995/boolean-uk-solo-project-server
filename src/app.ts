@@ -6,6 +6,9 @@ import authRouter from "./resources/auth/router";
 import { JwtPayload } from "jsonwebtoken";
 import loginAuth from "./middlewares/loginAuth";
 import usersRouter from "./resources/user/router";
+import cookieParser from "cookie-parser";
+import productRouter from "./resources/product/router";
+
 
 config();
 
@@ -23,10 +26,15 @@ declare global {
 
 app.disable("x-powered-by");
 
-app.use(cors());
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//   next();
+// });
 
 // Auth
 app.use(authRouter);
@@ -35,6 +43,10 @@ app.use(loginAuth);
 
 // Users
 app.use("/user", usersRouter);
+
+// Products
+app.use("/products", productRouter);
+
 
 /* SETUP ROUTES */
 
