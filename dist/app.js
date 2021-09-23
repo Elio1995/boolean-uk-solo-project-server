@@ -27,9 +27,9 @@ app.use((0, cors_1.default)({ origin: "http://localhost:3000", credentials: true
 // });
 // Auth
 app.use(router_1.default);
-app.use(loginAuth_1.default);
+// app.use(loginAuth);
 // Users
-app.use("/user", router_2.default);
+app.use("/user", loginAuth_1.default, router_2.default);
 // Products
 app.use("/products", router_3.default);
 /* SETUP ROUTES */

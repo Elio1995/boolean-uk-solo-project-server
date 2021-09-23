@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getAUserById = exports.getAllUsers = void 0;
+exports.createAUser = exports.getAUserById = exports.getAllUsers = void 0;
 const authGenerator_1 = require("../../utils/authGenerator");
 const service_1 = __importDefault(require("./service"));
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,7 +40,7 @@ const getAUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getAUserById = getAUserById;
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createAUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = req.body;
     // This is my modified create version, with the password hashing!
     const savedUser = yield service_1.default.createWithHash(newUser);
@@ -53,5 +53,19 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.cookie("token", token, { httpOnly: true });
     res.json({ data: { username: savedUser.username } });
 });
-exports.createUser = createUser;
+exports.createAUser = createAUser;
+// export const createAUser = async (req: Request, res: Response) => {
+//   const userInfo = { ...req.body };
+//   console.log(req.body);
+//   console.log(userInfo);
+//   try {
+//     const CreatedUser = await userClient.create({
+//       data: userInfo,
+//     });
+//     res.json(CreatedUser);
+//   } catch (error) {
+//     console.log(error);
+//     res.json({ Error: "Fail to create a user" });
+//   }
+// };
 //# sourceMappingURL=controller.js.map

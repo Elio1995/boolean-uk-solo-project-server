@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
-import  dbClient from "../../utils/database";
+import dbClient from "../../utils/database";
 
-const {product} = dbClient
-
+const { product } = dbClient;
 
 export const getAllProducts = async (req: Request, res: Response) => {
-    try {
-            const allProducts = await product.findMany();
-            res.json({ data: allProducts });
-          } catch (error) {
-            console.log(error);
-            res.json({ error: "Not working" });
-          }
-  };
+  try {
+    const allProducts = await product.findMany();
+    res.json({ data: allProducts });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Not working" });
+  }
+};
 
 export const getProductById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);

@@ -27,7 +27,7 @@ export const getAUserById = async (req: Request, res: Response) => {
   }
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const createAUser = async (req: Request, res: Response) => {
   const newUser = req.body;
   // This is my modified create version, with the password hashing!
   const savedUser = await userClient.createWithHash(newUser);
@@ -43,3 +43,21 @@ export const createUser = async (req: Request, res: Response) => {
 
   res.json({ data: { username: savedUser.username } });
 };
+
+// export const createAUser = async (req: Request, res: Response) => {
+//   const userInfo = { ...req.body };
+//   console.log(req.body);
+
+//   console.log(userInfo);
+
+//   try {
+//     const CreatedUser = await userClient.create({
+//       data: userInfo,
+//     });
+
+//     res.json(CreatedUser);
+//   } catch (error) {
+//     console.log(error);
+//     res.json({ Error: "Fail to create a user" });
+//   }
+// };
