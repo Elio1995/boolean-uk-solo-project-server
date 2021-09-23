@@ -9,7 +9,6 @@ import usersRouter from "./resources/user/router";
 import cookieParser from "cookie-parser";
 import productRouter from "./resources/product/router";
 
-
 config();
 
 const app = express();
@@ -39,14 +38,13 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // Auth
 app.use(authRouter);
 
-app.use(loginAuth);
+// app.use(loginAuth);
 
 // Users
-app.use("/user", usersRouter);
+app.use("/user", loginAuth, usersRouter);
 
 // Products
 app.use("/products", productRouter);
-
 
 /* SETUP ROUTES */
 
