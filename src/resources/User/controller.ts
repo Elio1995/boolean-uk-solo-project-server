@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { createToken } from "../../utils/authGenerator";
 import userClient from "./service";
+import { User } from "@prisma/client";
+import dbClient from "../../utils/database";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -61,3 +63,31 @@ export const createAUser = async (req: Request, res: Response) => {
 //     res.json({ Error: "Fail to create a user" });
 //   }
 // };
+
+// .localhost/3000/favourites/:userId
+
+export const usersWithFovurites = async (req: Request, res: Response) => {
+  const loggedInUser = req.currentUser as User;
+  const id = loggedInUser.id;
+  const favourite = req.body;
+  console.log(favourite);
+  try {
+    const newFavourite = await dbClient.product.upsert({
+      where: { id: id },
+      update: favourite,
+      create: favourite,
+      //     create: {
+      //       title: favourite.title
+      // category:  favourite.category
+      // price
+      // description
+      // image
+      // quantity
+    });
+    res.json({ date: newFavourite });
+  } catch (error) {
+    console.log(error);
+
+    res.json({ error });
+  }
+};

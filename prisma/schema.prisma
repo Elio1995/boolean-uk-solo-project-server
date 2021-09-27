@@ -26,7 +26,7 @@ enum Category {
 model Product {
   id               Int         @id @default(autoincrement())
   title            String
-  category         Category   
+  category         Category  
   price            Float
   description      String
   image            String

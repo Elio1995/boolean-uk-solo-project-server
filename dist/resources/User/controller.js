@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAUser = exports.getAUserById = exports.getAllUsers = void 0;
+exports.usersWithFovurites = exports.createAUser = exports.getAUserById = exports.getAllUsers = void 0;
 const authGenerator_1 = require("../../utils/authGenerator");
 const service_1 = __importDefault(require("./service"));
+const database_1 = __importDefault(require("../../utils/database"));
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield service_1.default.findMany();
@@ -68,4 +69,31 @@ exports.createAUser = createAUser;
 //     res.json({ Error: "Fail to create a user" });
 //   }
 // };
+// .localhost/3000/favourites/:userId
+const usersWithFovurites = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const loggedInUser = req.currentUser;
+    const id = loggedInUser.id;
+    const favourite = req.body;
+    console.log(favourite);
+    try {
+        const newFavourite = yield database_1.default.product.upsert({
+            where: { id: id },
+            update: favourite,
+            create: favourite,
+            //     create: {
+            //       title: favourite.title
+            // category:  favourite.category
+            // price
+            // description
+            // image
+            // quantity
+        });
+        res.json({ date: newFavourite });
+    }
+    catch (error) {
+        console.log(error);
+        res.json({ error });
+    }
+});
+exports.usersWithFovurites = usersWithFovurites;
 //# sourceMappingURL=controller.js.map
