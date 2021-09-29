@@ -12,25 +12,97 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addProductsToCard = void 0;
+exports.deleteCart = exports.addCart = exports.getUserCart = exports.getCart = void 0;
 const database_1 = __importDefault(require("../../utils/database"));
-const addProductsToCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const loggedInUser = req.currentUser;
-    const id = loggedInUser.id;
-    const cart = req.body;
-    console.log(cart);
+// export const addProductsToCard = async (req: Request, res: Response) => {
+//   const loggedInUser = req.currentUser as User;
+//   const id = loggedInUser.id;
+//   const cart = req.body;
+//   console.log(cart);
+//   try {
+//     const newCart = await dbClient.product.upsert({
+//       where: { id: id },
+//       update: cart,
+//       create: cart,
+//     });
+//     res.json({ date: newCart });
+//   } catch (error) {
+//     console.log(error);
+//     res.json({ error });
+//   }
+// };
+const getCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = Number(req.params.userId);
     try {
-        const newCart = yield database_1.default.product.upsert({
-            where: { id: id },
-            update: cart,
-            create: cart,
+        const foundCart = yield database_1.default.cart.findFirst({
+            where: { userId },
+            include: {
+                products: {
+                    orderBy: {
+                        id: "asc",
+                    },
+                },
+            },
         });
-        res.json({ date: newCart });
+        res.json({ data: foundCart });
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
         res.json({ error });
     }
 });
-exports.addProductsToCard = addProductsToCard;
+exports.getCart = getCart;
+const getUserCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = Number(req.params.userId);
+    const cartToCreate = req.body;
+    try {
+        const foundCart = yield database_1.default.cart.findFirst({
+            where: { userId },
+            include: { products: true },
+        });
+        if (!foundCart) {
+            const newCart = yield database_1.default.cart.create({
+                data: Object.assign({}, cartToCreate),
+                include: { products: true },
+            });
+            res.json({ data: newCart });
+        }
+        else {
+            res.json({ data: foundCart });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.getUserCart = getUserCart;
+const addCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newCart = req.body;
+    try {
+        const added = yield database_1.default.cart.create({
+            data: Object.assign({}, newCart),
+        });
+        res.json({ data: added });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.addCart = addCart;
+const deleteCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    try {
+        const removed = yield database_1.default.cart.delete({
+            where: { id },
+        });
+        res.json({ msg: "removed" });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.deleteCart = deleteCart;
 //# sourceMappingURL=controller.js.map

@@ -8,6 +8,8 @@ import loginAuth from "./middlewares/loginAuth";
 import usersRouter from "./resources/user/router";
 import cookieParser from "cookie-parser";
 import productRouter from "./resources/product/router";
+import cartRouter from "./resources/cart/router";
+import cartProductsRouter from "./resources/cartProducts/router";
 
 config();
 
@@ -29,7 +31,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 //   next();
@@ -45,6 +47,12 @@ app.use("/user", loginAuth, usersRouter);
 
 // Products
 app.use("/products", productRouter);
+
+// Cart
+app.use("/cart", cartRouter);
+
+// CartItems
+app.use("/cartProducts", cartProductsRouter);
 
 /* SETUP ROUTES */
 
