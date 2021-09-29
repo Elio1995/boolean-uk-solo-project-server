@@ -5,7 +5,7 @@ import morgan from "morgan";
 import authRouter from "./resources/auth/router";
 import { JwtPayload } from "jsonwebtoken";
 import loginAuth from "./middlewares/loginAuth";
-import usersRouter from "./resources/user/router";
+import usersRouter from "./resources/users/router";
 import cookieParser from "cookie-parser";
 import productRouter from "./resources/product/router";
 import cartRouter from "./resources/cart/router";
