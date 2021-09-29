@@ -1,2 +1,2 @@
 release: npx prisma migrate deploy
-web: npm run compile
+web: npm run prodstart
