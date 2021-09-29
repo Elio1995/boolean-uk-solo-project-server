@@ -11,7 +11,7 @@ const router_1 = __importDefault(require("./resources/auth/router"));
 const loginAuth_1 = __importDefault(require("./middlewares/loginAuth"));
 const router_2 = __importDefault(require("./resources/users/router"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const router_3 = __importDefault(require("./resources/product/router"));
+const router_3 = __importDefault(require("./resources/products/router"));
 const router_4 = __importDefault(require("./resources/cart/router"));
 const router_5 = __importDefault(require("./resources/cartProducts/router"));
 (0, dotenv_1.config)();

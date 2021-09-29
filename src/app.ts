@@ -7,7 +7,7 @@ import { JwtPayload } from "jsonwebtoken";
 import loginAuth from "./middlewares/loginAuth";
 import usersRouter from "./resources/users/router";
 import cookieParser from "cookie-parser";
-import productRouter from "./resources/product/router";
+import productRouter from "./resources/products/router";
 import cartRouter from "./resources/cart/router";
 import cartProductsRouter from "./resources/cartProducts/router";
 
