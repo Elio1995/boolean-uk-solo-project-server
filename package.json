@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc && node ./dist/app.js || exit 1",
-    "start": "nodemon -e ts -x \"npm run compile\""
+    "start": "nodemon -e ts -x \"npm run compile\"",
+    "prodstart": "node ./dist/app.js"
   },
   "keywords": [],
   "author": "",
