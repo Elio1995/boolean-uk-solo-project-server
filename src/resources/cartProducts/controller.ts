@@ -5,7 +5,7 @@ export const getProducts = async (req: Request, res: Response) => {
   try {
     const allInCart = await dbClient.productsOnCarts.findMany({
       orderBy: {
-        id: "asc",
+        id: "1",
       },
     });
     res.json({ data: allInCart });
@@ -43,7 +43,7 @@ export const addProductOrIncreaseQuantity = async (
         },
         data: {
           ...alreadyInCart,
-          quantity: alreadyInCart.qty + Number(quantity),
+          quantity: alreadyInCart.quantity + Number(quantity),
         },
       });
       res.json({ data: updatedQuantity });
@@ -78,7 +78,7 @@ export const updateProductQuantity = async (req: Request, res: Response) => {
         },
         data: {
           ...foundProduct,
-          qty: foundProduct?.quantity - 1,
+          quantity: foundProduct?.quantity - 1,
         },
       });
       res.json({ data: updatedProduct });

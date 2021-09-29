@@ -18,7 +18,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const allInCart = yield database_1.default.productsOnCarts.findMany({
             orderBy: {
-                id: "asc",
+                id: "1",
             },
         });
         res.json({ data: allInCart });
@@ -50,7 +50,7 @@ const addProductOrIncreaseQuantity = (req, res) => __awaiter(void 0, void 0, voi
                 where: {
                     id: alreadyInCart.id,
                 },
-                data: Object.assign(Object.assign({}, alreadyInCart), { quantity: alreadyInCart.qty + Number(quantity) }),
+                data: Object.assign(Object.assign({}, alreadyInCart), { quantity: alreadyInCart.quantity + Number(quantity) }),
             });
             res.json({ data: updatedQuantity });
         }
@@ -82,7 +82,7 @@ const updateProductQuantity = (req, res) => __awaiter(void 0, void 0, void 0, fu
                 where: {
                     id,
                 },
-                data: Object.assign(Object.assign({}, foundProduct), { qty: (foundProduct === null || foundProduct === void 0 ? void 0 : foundProduct.quantity) - 1 }),
+                data: Object.assign(Object.assign({}, foundProduct), { quantity: (foundProduct === null || foundProduct === void 0 ? void 0 : foundProduct.quantity) - 1 }),
             });
             res.json({ data: updatedProduct });
         }

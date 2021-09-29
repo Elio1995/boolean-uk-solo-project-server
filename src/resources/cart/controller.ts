@@ -29,7 +29,7 @@ export const getCart = async (req: Request, res: Response) => {
       include: {
         products: {
           orderBy: {
-            id: "asc",
+            id: "1",
           },
         },
       },
