@@ -44,7 +44,7 @@ export const getCart = async (req: Request, res: Response) => {
 
 export const getUserCart = async (req: Request, res: Response) => {
   const userId = Number(req.params.userId);
-  const cartToCreate = req.body;
+  const cartToCreate = { ...req.body, user_ID: undefined, userId };
 
   try {
     const foundCart = await dbClient.cart.findFirst({

@@ -54,7 +54,7 @@ const getCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getCart = getCart;
 const getUserCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = Number(req.params.userId);
-    const cartToCreate = req.body;
+    const cartToCreate = Object.assign(Object.assign({}, req.body), { user_ID: undefined, userId });
     try {
         const foundCart = yield database_1.default.cart.findFirst({
             where: { userId },
